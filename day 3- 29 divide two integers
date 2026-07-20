@@ -1,0 +1,42 @@
+class Solution {
+    public int divide(int dividend, int divisor) {
+        // Handle overflow cases explicitly
+        if (dividend == Integer.MIN_VALUE && divisor == -1) {
+            return Integer.MAX_VALUE;
+        }
+        if (dividend == Integer.MIN_VALUE && divisor == 1) {
+            return Integer.MIN_VALUE;
+        }
+
+        // Determine the sign of the result
+        // True if the signs are different, meaning the result will be negative
+        boolean isNegative = (dividend < 0) ^ (divisor < 0);
+
+        // Convert both numbers to negative values to prevent integer overflow
+        // (Integer.MIN_VALUE cannot be converted to a positive int without overflowing)
+        long absDividend = Math.abs((long) dividend);
+        long absDivisor = Math.abs((long) divisor);
+
+        int quotient = 0;
+
+        // Exponential subtraction using bit shifting
+        while (absDividend >= absDivisor) {
+            long tempDivisor = absDivisor;
+            int multiple = 1;
+
+            // Shift left until tempDivisor is about to exceed absDividend
+            while (absDividend >= (tempDivisor << 1)) {
+                tempDivisor <<= 1;
+                multiple <<= 1;
+            }
+
+            // Deduct the largest shifted divisor from dividend
+            absDividend -= tempDivisor;
+            // Add the corresponding multiple to the quotient
+            quotient += multiple;
+        }
+
+        // Apply the sign and return
+        return isNegative ? -quotient : quotient;
+    }
+}
