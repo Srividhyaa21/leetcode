@@ -1,0 +1,22 @@
+class Solution {
+    public boolean isPalindrome(int x) {
+        // Step 1: Handle edge cases
+        // Negative numbers are not palindromes (e.g., -121 reversed is 121-)
+        // Numbers ending in 0 are not palindromes (except 0 itself)
+        if (x < 0 || (x % 10 == 0 && x != 0)) {
+            return false;
+        }
+
+        int reversedNum = 0;
+        // Reversing only the second half of the number to avoid overflow
+        while (x > reversedNum) {
+            reversedNum = reversedNum * 10 + x % 10;
+            x /= 10;
+        }
+
+        // If the length is odd, we can get rid of the middle digit by reversedNum / 10
+        // For example, for 121, at the end of the loop x = 1, reversedNum = 12
+        // So x == reversedNum / 10 (1 == 1) returns true
+        return x == reversedNum || x == reversedNum / 10;
+    }
+}
