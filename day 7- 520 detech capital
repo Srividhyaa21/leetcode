@@ -1,0 +1,29 @@
+class Solution {
+    public boolean detectCapitalUse(String word) {
+        int capitalCount = 0;
+        
+        // Count total uppercase letters
+        for (char c : word.toCharArray()) {
+            if (Character.isUpperCase(c)) {
+                capitalCount++;
+            }
+        }
+
+        // Case 1: All letters are capitals (e.g., "USA")
+        if (capitalCount == word.length()) {
+            return true;
+        }
+
+        // Case 2: All letters are lowercase (e.g., "leetcode")
+        if (capitalCount == 0) {
+            return true;
+        }
+
+        // Case 3: Only the first letter is capital (e.g., "Google")
+        if (capitalCount == 1 && Character.isUpperCase(word.charAt(0))) {
+            return true;
+        }
+
+        return false;
+    }
+}
