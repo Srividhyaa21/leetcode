@@ -1,0 +1,34 @@
+import java.util.ArrayList;
+import java.util.List;
+
+class Solution {
+    public String[] findWords(String[] words) {
+        int[] rowMap = new int[26];
+        
+        // Map characters to row numbers (1, 2, or 3)
+        for (char c : "qwertyuiop".toCharArray()) rowMap[c - 'a'] = 1;
+        for (char c : "asdfghjkl".toCharArray())  rowMap[c - 'a'] = 2;
+        for (char c : "zxcvbnm".toCharArray())    rowMap[c - 'a'] = 3;
+        
+        List<String> result = new ArrayList<>();
+        
+        for (String word : words) {
+            String lower = word.toLowerCase();
+            int targetRow = rowMap[lower.charAt(0) - 'a'];
+            boolean isValid = true;
+            
+            for (int i = 1; i < lower.length(); i++) {
+                if (rowMap[lower.charAt(i) - 'a'] != targetRow) {
+                    isValid = false;
+                    break;
+                }
+            }
+            
+            if (isValid) {
+                result.add(word);
+            }
+        }
+        
+        return result.toArray(new String[0]);
+    }
+}
