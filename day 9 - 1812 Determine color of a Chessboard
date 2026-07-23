@@ -1,0 +1,9 @@
+class Solution {
+    public boolean squareIsWhite(String coordinates) {
+        char column = coordinates.charAt(0);
+        char row = coordinates.charAt(1);
+        
+        // Summing ASCII character codes directly works because parity remains the same
+        return (column + row) % 2 != 0;
+    }
+}
